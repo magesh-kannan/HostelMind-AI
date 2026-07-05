@@ -5,7 +5,9 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.hostelmind.backend.dto.UserDTO;
 import com.hostelmind.backend.entity.User;
+import com.hostelmind.backend.mapper.UserMapper;
 import com.hostelmind.backend.repository.UserRepository;
 import com.hostelmind.backend.service.UserService;
 
@@ -19,24 +21,34 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User saveUser(User user) {
-        return userRepository.save(user);
-    }
+public UserDTO saveUser(UserDTO userDTO) {
+
+    User user = UserMapper.toEntity(userDTO);
+
+    User savedUser = userRepository.save(user);
+
+    return UserMapper.toDTO(savedUser);
+}
 
     @Override
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
-    }
+public List<UserDTO> getAllUsers() {
+    return userRepository.findAll()
+            .stream()
+            .map(UserMapper::toDTO)
+            .toList();
+}
 
     @Override
-    public Optional<User> getUserById(Long id) {
-        return userRepository.findById(id);
-    }
+public Optional<UserDTO> getUserById(Long id) {
+    return userRepository.findById(id)
+            .map(UserMapper::toDTO);
+}
 
     @Override
-    public Optional<User> getUserByEmail(String email) {
-        return userRepository.findByEmail(email);
-    }
+public Optional<UserDTO> getUserByEmail(String email) {
+    return userRepository.findByEmail(email)
+            .map(UserMapper::toDTO);
+}
 
     @Override
     public void deleteUser(Long id) {

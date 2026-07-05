@@ -3,17 +3,17 @@ package com.hostelmind.backend.service;
 import java.util.List;
 import java.util.Optional;
 
-import com.hostelmind.backend.entity.User;
+import com.hostelmind.backend.dto.UserDTO;
 
 public interface UserService {
 
-    User saveUser(User user);
+    UserDTO saveUser(UserDTO userDTO);
 
-    List<User> getAllUsers();
+    List<UserDTO> getAllUsers();
 
-    Optional<User> getUserById(Long id);
+    Optional<UserDTO> getUserById(Long id);
 
-    Optional<User> getUserByEmail(String email);
+    Optional<UserDTO> getUserByEmail(String email);
 
     void deleteUser(Long id);
 }

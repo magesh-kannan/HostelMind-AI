@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.hostelmind.backend.entity.Student;
+import com.hostelmind.backend.dto.StudentDTO;
 import com.hostelmind.backend.service.StudentService;
 
 @RestController
@@ -22,13 +22,12 @@ public class StudentController {
     }
 
     @PostMapping
-    public Student create(@RequestBody Student student){
-        return service.save(student);
+    public StudentDTO create(@RequestBody StudentDTO studentDTO) {
+        return service.saveStudent(studentDTO);
     }
 
     @GetMapping
-    public List<Student> getAll(){
-        return service.getAll();
+    public List<StudentDTO> getAll() {
+        return service.getAllStudents();
     }
-
 }

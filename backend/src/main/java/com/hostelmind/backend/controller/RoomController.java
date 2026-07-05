@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.hostelmind.backend.entity.Room;
+import com.hostelmind.backend.dto.RoomDTO;
 import com.hostelmind.backend.service.RoomService;
 
 @RestController
@@ -22,12 +22,12 @@ public class RoomController {
     }
 
     @PostMapping
-    public Room createRoom(@RequestBody Room room) {
-        return roomService.saveRoom(room);
+    public RoomDTO createRoom(@RequestBody RoomDTO roomDTO) {
+        return roomService.saveRoom(roomDTO);
     }
 
     @GetMapping
-    public List<Room> getAllRooms() {
+    public List<RoomDTO> getAllRooms() {
         return roomService.getAllRooms();
     }
 }

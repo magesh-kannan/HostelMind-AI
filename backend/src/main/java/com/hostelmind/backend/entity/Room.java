@@ -3,7 +3,7 @@ package com.hostelmind.backend.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDateTime;
+
 
 @Entity
 @Table(name = "rooms")
@@ -12,11 +12,9 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Room {
+public class Room extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    
 
     @Column(nullable = false)
     private String roomNumber;
@@ -31,18 +29,7 @@ public class Room {
 @JoinColumn(name = "hostel_id", nullable = false)
 private Hostel hostel;
 
-    private LocalDateTime createdAt;
+  
 
-    private LocalDateTime updatedAt;
-
-    @PrePersist
-    public void prePersist() {
-        createdAt = LocalDateTime.now();
-        updatedAt = LocalDateTime.now();
-    }
-
-    @PreUpdate
-    public void preUpdate() {
-        updatedAt = LocalDateTime.now();
-    }
+    
 }
