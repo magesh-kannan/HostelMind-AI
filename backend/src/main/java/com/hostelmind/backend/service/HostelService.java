@@ -9,4 +9,8 @@ public interface HostelService {
     HostelDTO saveHostel(HostelDTO hostelDTO);
 
     List<HostelDTO> getAllHostels();
+
+    void deleteHostel(Long id);
+    HostelDTO updateHostel(Long id, HostelDTO hostelDTO);
+
 }

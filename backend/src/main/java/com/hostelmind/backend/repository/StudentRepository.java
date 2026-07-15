@@ -12,4 +12,6 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
 
     Optional<Student> findByRegisterNumber(String registerNumber);
 
+    boolean existsByRoomId(Long roomId);
+
 }

@@ -9,4 +9,9 @@ public interface RoomService {
     RoomDTO saveRoom(RoomDTO roomDTO);
 
     List<RoomDTO> getAllRooms();
+
+    RoomDTO updateRoom(Long id, RoomDTO roomDTO);
+
+    void deleteRoom(Long id);
+
 }

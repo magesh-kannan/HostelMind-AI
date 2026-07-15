@@ -3,6 +3,7 @@ package com.hostelmind.backend.service.impl;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.hostelmind.backend.dto.UserDTO;
@@ -15,40 +16,46 @@ import com.hostelmind.backend.service.UserService;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository,
+                           PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
-public UserDTO saveUser(UserDTO userDTO) {
+    public UserDTO saveUser(UserDTO userDTO) {
 
-    User user = UserMapper.toEntity(userDTO);
+        User user = UserMapper.toEntity(userDTO);
 
-    User savedUser = userRepository.save(user);
+        // Encode password before saving
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-    return UserMapper.toDTO(savedUser);
-}
+        User savedUser = userRepository.save(user);
 
-    @Override
-public List<UserDTO> getAllUsers() {
-    return userRepository.findAll()
-            .stream()
-            .map(UserMapper::toDTO)
-            .toList();
-}
+        return UserMapper.toDTO(savedUser);
+    }
 
     @Override
-public Optional<UserDTO> getUserById(Long id) {
-    return userRepository.findById(id)
-            .map(UserMapper::toDTO);
-}
+    public List<UserDTO> getAllUsers() {
+        return userRepository.findAll()
+                .stream()
+                .map(UserMapper::toDTO)
+                .toList();
+    }
 
     @Override
-public Optional<UserDTO> getUserByEmail(String email) {
-    return userRepository.findByEmail(email)
-            .map(UserMapper::toDTO);
-}
+    public Optional<UserDTO> getUserById(Long id) {
+        return userRepository.findById(id)
+                .map(UserMapper::toDTO);
+    }
+
+    @Override
+    public Optional<UserDTO> getUserByEmail(String email) {
+        return userRepository.findByEmail(email)
+                .map(UserMapper::toDTO);
+    }
 
     @Override
     public void deleteUser(Long id) {
